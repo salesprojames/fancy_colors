@@ -4,9 +4,9 @@
     var boxes = [];
 
     var gameSettings = {
-      numberOfBoxes: 75,
-      maxSize: 20,
-      maxDuration: 100
+      numberOfBoxes: 150,
+      maxSize: 30,
+      maxDuration: 50
     }
 
     //Generate Random Number
