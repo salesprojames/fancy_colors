@@ -19,8 +19,8 @@
     }
 
     //Generate Random Number
-    function randomNum(n){
-      return Math.floor(Math.random() * n)
+    function randomNum(n, min){
+      return Math.floor((Math.random() * n) + min)
     }
 
     //Create a certain number of boxes
@@ -28,9 +28,11 @@
       for(i=0;i<settings.numberOfBoxes;i++){
         boxes.push(
           {
-            color: colors[randomNum(colors.length)],
-            size: randomNum(settings.maxSize + 5),
-            duration: randomNum(settings.maxDuration + 5)
+            color: colors[randomNum(colors.length, 0)],
+            size: randomNum(settings.maxSize, 5),
+            x: randomNum(canvas.width, 0),
+            y: randomNum(canvas.height, 0),
+            duration: randomNum(settings.maxDuration, 5)
           }
         )
       }
@@ -38,11 +40,13 @@
 
     //Draw the boxes on the screen
     function drawBoxes(){
+      console.log("draw");
       for(i=0;i<boxes.length;i++){
+        context.clearRect(boxes[i].x,boxes[i].y,(boxes[i].x + boxes[i].size),(boxes[i].y + boxes[i].size))
         context.fillStyle = boxes[i].color
         context.fillRect(
-          randomNum(canvas.width),
-          randomNum(canvas.height),
+          boxes[i].x,
+          boxes[i].y,
           boxes[i].size,
           boxes[i].size
         )
@@ -56,23 +60,27 @@
     }
 
     function deleteExpiredBoxes(){
-      for(i=0;i<boxes.length;i++){
-        if(boxes[i].duration == 0){
-          boxes.splice(i,1);
+      for(t=0;t<boxes.length;t++){
+        if(boxes[t].duration <= 0){
+          boxes.splice(t,1);
         }
       }
     }
 
     function runGame(){
-      drawBoxes();
-      reduceDuration();
-      deleteExpiredBoxes();
+
       requestAnimationFrame(runGame);
     }
 
+    function testGame(){
+      for(l=0;l<50;l++){
+        drawBoxes();
+        reduceDuration();
+        deleteExpiredBoxes();
+      }
+    }
     createBoxes();
-    runGame();
-
+    testGame();
 
 
   </script>
