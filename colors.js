@@ -3,7 +3,7 @@ var colors = [
   "blue",
   "green",
   "orange",
-  "black",
+  "white",
   "purple",
   "yellow",
   "pink"

@@ -4,85 +4,8 @@
   <title>Fireworks</title>
 </head>
 <body>
-  <canvas id="canvas" width="600" height="400"></canvas>
+  <canvas id="canvas" width="600" height="400" style="background-color: black;"></canvas>
   <script type="text/javascript" src="colors.js"></script>
-  <script type="text/javascript">
-    //Create the Canvas
-    var canvas = document.getElementById("canvas");
-    var context = canvas.getContext("2d");
-    var boxes = [];
-
-    var settings = {
-      numberOfBoxes: 20,
-      maxSize: 35,
-      maxDuration: 30
-    }
-
-    //Generate Random Number
-    function randomNum(n, min){
-      return Math.floor((Math.random() * n) + min)
-    }
-
-    //Create a certain number of boxes
-    function createBoxes(){
-      for(i=0;i<settings.numberOfBoxes;i++){
-        boxes.push(
-          {
-            color: colors[randomNum(colors.length, 0)],
-            size: randomNum(settings.maxSize, 5),
-            x: randomNum(canvas.width, 0),
-            y: randomNum(canvas.height, 0),
-            duration: randomNum(settings.maxDuration, 5)
-          }
-        )
-      }
-    }
-
-    //Draw the boxes on the screen
-    function drawBoxes(){
-      console.log("draw");
-      for(i=0;i<boxes.length;i++){
-        context.clearRect(boxes[i].x,boxes[i].y,(boxes[i].x + boxes[i].size),(boxes[i].y + boxes[i].size))
-        context.fillStyle = boxes[i].color
-        context.fillRect(
-          boxes[i].x,
-          boxes[i].y,
-          boxes[i].size,
-          boxes[i].size
-        )
-      }
-    }
-
-    function reduceDuration(){
-      for(i=0;i<boxes.length;i++){
-        boxes[i].duration -= 1;
-      }
-    }
-
-    function deleteExpiredBoxes(){
-      for(t=0;t<boxes.length;t++){
-        if(boxes[t].duration <= 0){
-          boxes.splice(t,1);
-        }
-      }
-    }
-
-    function runGame(){
-
-      requestAnimationFrame(runGame);
-    }
-
-    function testGame(){
-      for(l=0;l<50;l++){
-        drawBoxes();
-        reduceDuration();
-        deleteExpiredBoxes();
-      }
-    }
-    createBoxes();
-    testGame();
-
-
-  </script>
+  <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
