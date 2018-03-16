@@ -5,7 +5,86 @@
 </head>
 <body>
   <canvas id="canvas" width="1400px" height="800px" style="background-color: black;"></canvas>
-  <script type="text/javascript" src="colors.js"></script>
-  <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript">
+    //Create the Canvas
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    var colors = [
+      "red",
+      "blue",
+      "green",
+      "orange",
+      "white",
+      "purple",
+      "yellow",
+      "pink"
+    ];
+
+    var boxes = [];
+
+    var gameSettings = {
+      numberOfBoxes: 150,
+      maxSize: 30,
+      maxDuration: 50
+    }
+
+    //Generate Random Number
+    function randomNum(max){
+      return Math.floor((Math.random() * max))
+    }
+
+    //Create a certain number of boxes
+    function createBoxes(n){
+      for(i=0; i<n; i++) {
+        boxes.push(createBox());
+      }
+    }
+
+    function createBox() {
+      return {
+        color: colors[randomNum(colors.length)],
+        size: 5 + randomNum(gameSettings.maxSize),
+        x: randomNum(canvas.width),
+        y: randomNum(canvas.height),
+        duration: 5 + randomNum(gameSettings.maxDuration)
+      }
+    }
+
+    function step() {
+      for(i=0; i < boxes.length; i++) {
+        boxes[i].duration--;
+
+        if(boxes[i].duration < 0) {
+          boxes[i] = createBox();
+        }
+      }
+    }
+
+    //Draw the boxes on the screen
+    function draw(){
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      for(i=0; i<boxes.length; i++) {
+        context.fillStyle = boxes[i].color;
+        context.fillRect(
+          boxes[i].x,
+          boxes[i].y,
+          boxes[i].size,
+          boxes[i].size
+        );
+      }
+    }
+
+    function runGame(){
+      step();
+      draw();
+      requestAnimationFrame(runGame);
+    }
+
+    createBoxes(gameSettings.numberOfBoxes);
+    runGame();
+
+  </script>
 </body>
 </html>
