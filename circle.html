@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fireworks</title>
+</head>
+<body>
+  <canvas id="canvas" width="1400px" height="800px" style="background-color: white;"></canvas>
+  <script type="text/javascript">
+    //Create the Canvas
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+
+    context.beginPath();
+    context.arc(100,75,20,0,2*Math.PI);
+    context.stroke();
+  </script>
+</body>
+</html>
