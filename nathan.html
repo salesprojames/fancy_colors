@@ -24,9 +24,9 @@
     var circles = [];
 
     var gameSettings = {
-      numberOfCircles: 150,
-      maxSize: 30,
-      maxDuration: 50
+      numberOfCircles: 20,
+      maxSize: 40,
+      maxDuration: 500
     }
 
     //Generate Random Number
@@ -51,8 +51,14 @@
       }
     }
 
+    function moveCircle(circle){
+      circle.x++;
+    }
+
     function step() {
       for(i=0; i < circles.length; i++) {
+        moveCircle(circles[i]);
+
         circles[i].duration--;
 
         if(circles[i].duration < 0) {
