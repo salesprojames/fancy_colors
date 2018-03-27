@@ -25,8 +25,7 @@
 
     var gameSettings = {
       numberOfCircles: 20,
-      maxSize: 40,
-      maxDuration: 500
+      maxSize: 40
     }
 
     //Generate Random Number
@@ -46,8 +45,7 @@
         color: colors[randomNum(colors.length)],
         size: 5 + randomNum(gameSettings.maxSize),
         x: randomNum(canvas.width),
-        y: randomNum(canvas.height),
-        duration: 5 + randomNum(gameSettings.maxDuration)
+        y: randomNum(canvas.height)
       }
     }
 
@@ -55,13 +53,23 @@
       circle.x++;
     }
 
+    function offCanvas(circle){
+      if(
+          circle.x < 0 ||
+          circle.x > canvas.width ||
+          circle.y < 0 ||
+          circle.y > canvas.height
+        ){
+        return true;
+      }
+    }
+
     function step() {
       for(i=0; i < circles.length; i++) {
+
         moveCircle(circles[i]);
 
-        circles[i].duration--;
-
-        if(circles[i].duration < 0) {
+        if(offCanvas(circles[i])){
           circles[i] = createCircle();
         }
       }
