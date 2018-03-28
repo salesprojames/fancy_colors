@@ -45,12 +45,21 @@
         color: colors[randomNum(colors.length)],
         size: 5 + randomNum(gameSettings.maxSize),
         x: randomNum(canvas.width),
-        y: randomNum(canvas.height)
+        y: randomNum(canvas.height),
+        dir: randomNum(4)
       }
     }
 
     function moveCircle(circle){
-      circle.x++;
+      if(circle.dir == 0){
+
+      } else if(circle.dir == 1){
+
+      } else if(circle.dir == 2){
+
+      } else if(circle.dir == 3){
+
+      }
     }
 
     function offCanvas(circle){
