@@ -4,7 +4,7 @@
   <title>Fireworks</title>
 </head>
 <body>
-  <canvas id="canvas" width="1400px" height="800px" style="background-color: black;"></canvas>
+  <canvas id="canvas" width="600px" height="400px" style="background-color: black;"></canvas>
   <script type="text/javascript">
     //Create the Canvas
     var canvas = document.getElementById("canvas");
@@ -25,7 +25,8 @@
 
     var gameSettings = {
       numberOfCircles: 20,
-      maxSize: 40
+      maxSize: 40,
+      cornerSteps: 30
     }
 
     //Generate Random Number
@@ -46,19 +47,31 @@
         size: 5 + randomNum(gameSettings.maxSize),
         x: randomNum(canvas.width),
         y: randomNum(canvas.height),
-        dir: randomNum(4)
+        dir: randomNum(4),
+        xSpeed: 0,
+        ySpeed: 0
       }
     }
 
-    function moveCircle(circle){
-      if(circle.dir == 0){
+    function changeLocation(currentPoint, endPoint){
+      return (endPoint - currentPoint)/gameSettings.cornerSteps
+    }
 
-      } else if(circle.dir == 1){
-
-      } else if(circle.dir == 2){
-
-      } else if(circle.dir == 3){
-
+    function setCircleSpeed(circle){
+      if(circle.xSpeed == 0){
+        if(circle.dir == 0){
+          circle.xSpeed = changeLocation(circle.x, 0);
+          circle.ySpeed = changeLocation(circle.y, 0);
+        } else if(circle.dir == 1){
+          circle.xSpeed = changeLocation(circle.x, canvas.width);
+          circle.ySpeed = changeLocation(circle.y, 0);
+        } else if(circle.dir == 2){
+          circle.xSpeed = changeLocation(circle.x, canvas.width);
+          circle.ySpeed = changeLocation(circle.y, canvas.height);
+        } else if(circle.dir == 3){
+          circle.xSpeed = changeLocation(circle.x, 0);
+          circle.ySpeed = changeLocation(circle.y, canvas.height);
+        }
       }
     }
 
@@ -76,7 +89,9 @@
     function step() {
       for(i=0; i < circles.length; i++) {
 
-        moveCircle(circles[i]);
+        setCircleSpeed(circles[i]);
+        circles[i].x += circles[i].xSpeed;
+        circles[i].y += circles[i].ySpeed;
 
         if(offCanvas(circles[i])){
           circles[i] = createCircle();
